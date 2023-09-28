@@ -1,13 +1,21 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import BottomNavigation from './src/navigation/BottomNavigation'
+import {View, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import BottomNavigation from './src/navigation/BottomNavigation';
+import {isPermission} from './src/permission';
+import { useDispatch } from 'react-redux';
+import { setTrue } from './src/redux/slice/checkSlice';
 
 const App = () => {
-  return (
-    <View style={{flex:1}}>
-      <BottomNavigation/>
-    </View>
-  )
-}
+ const dispatch = useDispatch()
+  useEffect(() => {
+    isPermission(dispatch);
+  }, []);
 
-export default App
+  return (
+    <View style={{flex: 1}}>
+      <BottomNavigation />
+    </View>
+  );
+};
+
+export default App;

@@ -8,14 +8,15 @@ import {
   StyleSheet,
 } from 'react-native';
 import FullScreenImage from './FullScreenImage';
-import VideoPlayer from 'react-native-video-player';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const GalleryItems = ({parentArray}) => {
-
   const [imagePath, setImagePath] = useState();
   const [visible, setVisible] = useState(false);
 
-  const toggleModal = useCallback(item => {
+  const toggleModal = useCallback(
+    item => {
+      console.log(item);
       setImagePath(item);
       setVisible(prev => !prev);
     },
@@ -35,16 +36,18 @@ const GalleryItems = ({parentArray}) => {
               keyExtractor={(item, index) => index.toString() + item}
               numColumns={4}
               renderItem={({item}) => (
-                <TouchableOpacity onPress={() => toggleModal(item.path)}>
+                <TouchableOpacity
+                  onPress={() => toggleModal(item.node.image.uri)}>
                   <View style={styles.item}>
-                    {item.path.includes('.mp4') ? (
-                      <VideoPlayer
-                        video={{uri: item.path}}
-                        thumbnail={{uri: `file://${item.path}`}}
+                    {item.node.image.uri.includes('.mp4') ? (
+                      <AntDesign
+                        name="caretright"
+                        size={20}
+                        style={{color: 'white', alignSelf: 'center'}}
                       />
                     ) : (
                       <Image
-                        source={{uri: `file://${item.path}`}}
+                        source={{uri: item.node.image.uri}}
                         style={styles.image}
                       />
                     )}
@@ -72,6 +75,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 2,
     marginBottom: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'grey',
   },
   image: {
     flex: 1,

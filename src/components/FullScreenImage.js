@@ -4,9 +4,8 @@ import VideoPlayer from 'react-native-video-player';
 
 const FullScreenImage = ({toggleModal, visible, imagePath}) => {
 
-  const isVideo =
-    imagePath && typeof imagePath === 'string' && imagePath?.endsWith('.mp4');
-  console.log('iseiueryeiur', isVideo, imagePath);
+  const isVideo = imagePath && typeof imagePath === 'string' && imagePath?.endsWith('.mp4');
+
   return (
     <View style={{backgroundColor: 'black', flex: 1}}>
       <Modal
@@ -15,15 +14,15 @@ const FullScreenImage = ({toggleModal, visible, imagePath}) => {
         style={{backgroundColor: 'black'}}>
         {isVideo ? (
           <VideoPlayer
-            thumbnail={{uri: `file://${imagePath}`}}
-            video={{uri: `file://${imagePath}`}}
-            control={true}
+            thumbnail={{uri:imagePath}}
+            video={{uri: imagePath}}
+            // control={true}
             videoWidth={900}
             videoHeight={1800}
           />
         ) : (
           <Image
-            source={{uri: `file://${imagePath}`}}
+            source={{uri: imagePath}}
             style={{width: '100%', height: '100%', resizeMode: 'contain'}}
           />
         )}
