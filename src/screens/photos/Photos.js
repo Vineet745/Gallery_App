@@ -37,7 +37,7 @@ const Photos = () => {
     ];
 
     CameraRoll.getPhotos({
-      first: 60,
+      first: 100,
       assetType: 'All',
     })
       .then(response => {
@@ -47,7 +47,7 @@ const Photos = () => {
           const monthAbbreviation = months[date.getMonth()];
           const day = date.getDate();
           const year = date.getFullYear();
-          const formattedDate = `${monthAbbreviation} ${padToTwo(
+          const formattedDate = `${padToTwo(monthAbbreviation)} ${padToTwo(
             day,
           )}, ${year}`;
 
@@ -58,8 +58,23 @@ const Photos = () => {
           imageFilesByDate[formattedDate].push(item);
         });
 
-        const sortedDates = Array.from(unqDates).sort();
-        console.log('sortedDates', sortedDates);
+        // Array Sorting
+
+        const sortedDates = Array.from(unqDates)
+          .sort((a, b) => {
+            const [monthA, dayA] = a.split(' ');
+            const [monthB, dayB] = b.split(' ');
+
+            const monthIndexA = months.indexOf(monthA);
+            const monthIndexB = months.indexOf(monthB);
+
+            if (monthIndexA === monthIndexB) {
+              return parseInt(dayA) - parseInt(dayB);
+            }
+            return monthIndexA - monthIndexB;
+          })
+          .reverse();
+
         const updatedParentArray = sortedDates.map(date => ({
           formattedDate: date,
           data: imageFilesByDate[date],

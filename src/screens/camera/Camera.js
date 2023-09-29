@@ -17,7 +17,6 @@ const Camera = ({navigation}) => {
       .then(image => {
         console.log('Image taken:', image);
 
-        // Save the image to the Camera Roll
         return CameraRoll.save(image.path, {type: 'photo', album: 'Camera'});
       })
       .then(savedImage => {
